@@ -17,7 +17,7 @@ Here are some ideas to get you started:
 
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/0000007axl/0000007axl/output/github-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/0000007axl/0000007axl/output/github-snake-light.svg">
-  <img alt="GitHub contribution snake" src="https://raw.githubusercontent.com/0000007axl/0000007axl/output/github-snake-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/00000007axl/00000007axl/output/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/00000007axl/00000007axl/output/github-snake-light.svg">
+  <img alt="GitHub contribution snake" src="https://raw.githubusercontent.com/00000007axl/00000007axl/output/github-snake-light.svg">
 </picture>
