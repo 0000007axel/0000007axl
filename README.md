@@ -1,21 +1,20 @@
-## Hi there 👋
+# Axel · 0000007axl
 
-<!--
-**AxlSeth/AxlSeth** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+> Junior C & Python dev · École 42 · he/him
 
-Here are some ideas to get you started:
+![C](https://img.shields.io/badge/C-%232D4F67.svg?style=flat&logo=c&logoColor=%237FB4CA) ![Python](https://img.shields.io/badge/Python-%23957FB8.svg?style=flat&logo=python&logoColor=%23DCD7BA) ![Lua](https://img.shields.io/badge/Lua-%237FB4CA.svg?style=flat&logo=lua&logoColor=%231F1F28)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-![Stats](https://github-readme-stats.vercel.app/api?username=0000007axl&theme=dark&show_icons=true)
-![Visitors](https://komarev.com/ghpvc/?username=0000007axl&color=blue)
+---
+
+### about
+
+Student at **École 42** — learning through projects, peers, and pain.  
+Building things in C from scratch. Occasionally writing Python when I want to feel productive.  
+Dotfiles enthusiast. Linux native.
+
+---
+
+### contribution snake
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/0000007axl/0000007axl/output/github-snake-dark.svg" />
