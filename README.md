@@ -15,6 +15,9 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 ![Stats](https://github-readme-stats.vercel.app/api?username=0000007axl&theme=dark&show_icons=true)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=0000007axl&layout=compact&theme=dark)
+![Streak](https://streak-stats.demolab.com?user=0000007axl&theme=dark)
+![Visitors](https://komarev.com/ghpvc/?username=0000007axl&color=blue)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/0000007axl/0000007axl/output/github-snake-dark.svg" />
