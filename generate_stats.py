@@ -70,23 +70,30 @@ CELL_FILL = ["#21262d","#0e4429","#006d32","#26a641","#39d353"]
 # ── Title SVG ─────────────────────────────────────────────────────────────────
 
 def build_title_svg():
-    W=680; H=160
-    crows = (
-        f'<path d="M308 36 C312 31 318 30 321 32 C322 30 325 29 328 30 C331 28 334 29 333 32 '
-        f'C331 33 329 32 328 33 C326 35 323 37 319 36 C317 37 314 37 308 36Z" fill="#c9d1d9" opacity="0.6"/>'
-        f'<path d="M352 34 C356 29 361 28 364 30 C365 28 368 27 371 28 C374 26 377 27 376 30 '
-        f'C374 31 372 30 371 31 C369 33 366 35 363 34 C361 35 358 35 352 34Z" fill="#c9d1d9" opacity="0.45"/>'
-    )
+    W=680; H=150
+    # TypographerFrakturUNZ1 font is committed to the repo and read at generation time
+    import base64, os
+    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "TypographerFrakturUNZ1_Heavy.ttf")
+    with open(font_path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode()
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
-  <defs><style>{FONTS}</style></defs>
-  {crows}
-  <text x="{W//2}" y="88" text-anchor="middle"
-    font-family="UnifrakturMaguntia,serif" font-size="58" fill="#e6edf3" letter-spacing="2">Axel</text>
-  <text x="{W//2}" y="116" text-anchor="middle"
+  <defs>
+    <style>
+      @font-face {{
+        font-family: 'AxelFraktur';
+        src: url('data:font/truetype;base64,{b64}') format('truetype');
+      }}
+      @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
+    </style>
+  </defs>
+  <text x="{W//2}" y="80" text-anchor="middle"
+    font-family="AxelFraktur,serif" font-size="62" fill="#e6edf3" letter-spacing="4">Axel</text>
+  <text x="{W//2}" y="110" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
-  <text x="{W//2}" y="140" text-anchor="middle"
+  <text x="{W//2}" y="136" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
+
 
 # ── GitHub stats SVG ──────────────────────────────────────────────────────────
 
