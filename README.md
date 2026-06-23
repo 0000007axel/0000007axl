@@ -1,6 +1,11 @@
-<div align="center" style="line-height: 0;">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG"></a>
-  <img src="title.svg?v=3" width="680" alt="Axel">
+<div align="center" style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+
+  <a href="https://git.io/typing-svg" style="display: block; margin: 0; line-height: 0;">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG" style="display: block; margin: 0;">
+  </a>
+
+  <img src="title.svg?v=3" width="680" alt="Axel" style="display: block; margin: 0;">
+
 </div>
 
 <div align="center">
