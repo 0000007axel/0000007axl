@@ -1,10 +1,10 @@
-<div align="center" style="line-height: 0;">
+<div align="center" style="display: flex; flex-direction: column; align-items: center; gap: 0;">
 
-  <a href="https://git.io/typing-svg" style="display: block; line-height: 0;">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG" style="display: block;">
+  <a href="https://git.io/typing-svg" style="display: block; line-height: 0; margin: 0;">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG" style="display: block; margin: 0;">
   </a>
 
-  <img src="title.svg?v=3" width="680" alt="Axel" style="margin-top: -500; display: block;">
+  <img src="title.svg?v=3" width="680" alt="Axel" style="display: block; margin: 0; margin-top: -50px;">
 
 </div>
 
