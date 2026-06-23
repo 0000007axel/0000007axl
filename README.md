@@ -1,6 +1,7 @@
 <p align="center">
   <img src="title.svg?v=2" width="10000" alt="Axel">
 </p>
+
 <div align="center">
   <img src="https://img.shields.io/badge/42%20Student-000000?style=for-the-badge&logo=42&logoColor=white">
 </div>
@@ -19,9 +20,11 @@
 
 Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.
-Algorithms enthusiast. Linux native. Living in the terminal.
 I use NeoVim btw.
 
+<div align="center">
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=25&pause=1000&color=F7F7F780&center=true&vCenter=true&width=450&height=100&lines=Algorithms+enthusiast.;Linux+native.;Living+in+the+terminal." alt="Typing SVG" /></a>
+</div>
 ---
 
 ### github
