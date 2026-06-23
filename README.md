@@ -8,9 +8,11 @@
 
 ### about
 
-Student at **École 42** — learning through projects, peers, and pain.
+Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.  
-Dotfiles enthusiast. Linux native. Living in the terminal.
+Algorithms enthusiast. Linux native. Living in the terminal.
+
+I use NeoVim btw.
 
 ---
 
