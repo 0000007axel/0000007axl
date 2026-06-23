@@ -4,14 +4,12 @@
     <img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG" style="display: block;">
   </a>
 
-  <img src="title.svg?v=3" width="680" alt="Axel" style="margin-top: -20; display: block;">
+  <img src="title.svg?v=3" width="680" alt="Axel" style="margin-top: -500; display: block;">
 
 </div>
 
 <div align="center">
   <img src="https://img.shields.io/badge/42%20Student-000000?style=for-the-badge&logo=42&logoColor=white">
-</div>
-<p align="center">
   <img src="https://img.shields.io/badge/Linux-black?style=for-the-badge&logo=linux&logoColor=white" />
   <img src="https://img.shields.io/badge/Shell-black?style=for-the-badge&logo=gnubash&logoColor=white" />
   <img src="https://img.shields.io/badge/Neovim-black?style=for-the-badge&logo=neovim&logoColor=white" />
