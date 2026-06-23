@@ -101,28 +101,21 @@ def glyph_paths(font_path, text="seth axel", font_size=62.0):
     return glyphs
 
 def build_title_svg():
-    W=680; H=150
-    import os
-    fp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "flyerfont.otf")
-    glyphs = glyph_paths(fp)
-    x = (W - sum(g[2] for g in glyphs)) / 2
-    asc = 864 * 62 / 1000
-    desc = 282 * 62 / 1000
-    by = (H - asc - desc) / 2 + asc
-    paths = "".join(f'    <path d="{g[1]}" transform="translate({x + sum(glyphs[j][2] for j in range(i)):.1f}, {by:.1f}) scale(1, -1)"/>\n'
-                    for i, g in enumerate(glyphs) if g[1] is not None)
+    W=680; H=100
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
+      @keyframes fadeIn {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
+      .delayed {{ animation: fadeIn 0.8s ease-in 4.5s both; }}
     </style>
   </defs>
-  <g fill="#e6edf3">
-{paths}  </g>
-  <text x="{W//2}" y="122" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-  <text x="{W//2}" y="142" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
+  <g class="delayed">
+    <text x="{W//2}" y="55" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
+    <text x="{W//2}" y="75" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
+  </g>
 </svg>"""
 
 
