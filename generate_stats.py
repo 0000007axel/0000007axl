@@ -103,7 +103,7 @@ def build_title_svg():
     asc = 864 * 62 / 1000
     desc = 282 * 62 / 1000
     by = (H - asc - desc) / 2 + asc
-    paths = "".join(f'    <path d="{g[1]}" transform="translate({x + sum(glyphs[j][2] for j in range(i)):.1f}, {by:.1f})"/>\n'
+    paths = "".join(f'    <path d="{g[1]}" transform="translate({x + sum(glyphs[j][2] for j in range(i)):.1f}, {by:.1f}) scale(1, -1)"/>\n'
                     for i, g in enumerate(glyphs) if g[1] is not None)
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
