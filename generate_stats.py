@@ -80,14 +80,14 @@ def build_title_svg():
   <defs>
     <style>
       @font-face {{
-        font-family: 'AxelFraktur';
-        src: url('data:font/opentype;base64,{b64}') format('truetype');
+        font-family: 'Flyerfonts';
+        src: url('data:font/opentype;base64,{b64}') format('opentype');
       }}
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
   <text x="{W//2}" y="80" text-anchor="middle"
-    font-family="AxelFraktur,serif" font-size="62" fill="#e6edf3" letter-spacing="4">axel seth</text>
+    font-family="Flyerfonts,serif" font-size="62" fill="#e6edf3" letter-spacing="4">axel seth</text>
   <text x="{W//2}" y="110" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
   <text x="{W//2}" y="136" text-anchor="middle"
