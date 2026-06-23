@@ -1,13 +1,16 @@
 <p align="center">
   <img src="title.svg?v=2" width="680" alt="Axel">
 </p>
-
+<div align="center">
+  <img src="https://img.shields.io/badge/42%20Student-000000?style=for-the-badge&logo=42&logoColor=white">
+</div>
 <p align="center">
-  <img src="https://img.shields.io/badge/Linux-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Neovim-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Git-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/C-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Python-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Linux-black?style=for-the-badge&logo=linux&logoColor=white" />
+  <img src="https://img.shields.io/badge/Neovim-black?style=for-the-badge&logo=neovim&logoColor=white" />
+  <img src="https://img.shields.io/badge/Git-black?style=for-the-badge&logo=git&logoColor=white" />
+  <img src="https://img.shields.io/badge/C-black?style=for-the-badge&logo=c&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Shell-black?style=for-the-badge&logo=gnubash&logoColor=white" />
 </p>
 
 ---
