@@ -69,25 +69,50 @@ CELL_FILL = ["#21262d","#0e4429","#006d32","#26a641","#39d353"]
 
 # ── Title SVG ─────────────────────────────────────────────────────────────────
 
+def glyph_paths(font_path, text="axel seth", font_size=62.0):
+    from fontTools.ttLib import TTFont
+    from fontTools.pens.svgPathPen import SVGPathPen
+    import re
+    font = TTFont(font_path)
+    cmap = font.getBestCmap()
+    gset = font.getGlyphSet()
+    hmtx = font['hmtx']
+    upem = font['head'].unitsPerEm
+    s = font_size / upem
+    glyphs = []
+    for char in text:
+        if char == ' ':
+            adv = hmtx.metrics.get('.notdef', (500,0))[0] * s * 0.5
+            glyphs.append((' ', None, adv))
+            continue
+        gn = cmap.get(ord(char))
+        if gn is None: continue
+        pen = SVGPathPen(gset)
+        gset[gn].draw(pen)
+        p = re.sub(r'-?\d+\.?\d*(?:[eE][+-]?\d+)?', lambda m: f"{float(m.group(0))*s:.1f}", pen.getCommands())
+        glyphs.append((char, p, hmtx.metrics[gn][0]*s))
+    font.close()
+    return glyphs
+
 def build_title_svg():
     W=680; H=150
-    # TypographerFrakturUNZ1 font is committed to the repo and read at generation time
-    import base64, os
-    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "flyerfont.otf")
-    with open(font_path, "rb") as f:
-        b64 = base64.b64encode(f.read()).decode()
+    import os
+    fp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "flyerfont.otf")
+    glyphs = glyph_paths(fp)
+    x = (W - sum(g[2] for g in glyphs)) / 2
+    asc = 864 * 62 / 1000
+    desc = 282 * 62 / 1000
+    by = (H - asc - desc) / 2 + asc
+    paths = "".join(f'    <path d="{g[1]}" transform="translate({x + sum(glyphs[j][2] for j in range(i)):.1f}, {by:.1f})"/>\n'
+                    for i, g in enumerate(glyphs) if g[1] is not None)
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
-      @font-face {{
-        font-family: 'Flyerfonts';
-        src: url('data:font/opentype;base64,{b64}') format('opentype');
-      }}
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <text x="{W//2}" y="80" text-anchor="middle"
-    font-family="Flyerfonts,serif" font-size="62" fill="#e6edf3" letter-spacing="4">axel seth</text>
+  <g fill="#e6edf3">
+{paths}  </g>
   <text x="{W//2}" y="110" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
   <text x="{W//2}" y="136" text-anchor="middle"
