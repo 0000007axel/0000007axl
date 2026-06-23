@@ -1,6 +1,9 @@
 <p align="center">
   <img src="title.svg" width="680" alt="Axel">
 </p>
+<p align="center">
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&color=EEF7DB&center=true&multiline=true&width=450&height=100&lines=%22A+fool+prays+for+an+easier+road%2C;a+wise+man+prays+for+stronger+legs.%22" alt="Typing SVG" /></a>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Linux-black?style=for-the-badge" />
@@ -10,7 +13,6 @@
   <img src="https://img.shields.io/badge/Python-black?style=for-the-badge" />
 </p>
 
----
 
 ### about
 
