@@ -102,15 +102,15 @@ def glyph_paths(font_path, text="seth axel", font_size=62.0):
 
 def build_title_svg():
     W=680; H=100
+    anim = '<animate attributeName="opacity" from="0" to="1" dur="0.01s" begin="4.5s" fill="freeze"/>'
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
-      @keyframes popIn {{ to {{ opacity: 1; }} }}
-      .delayed {{ animation: popIn 0.01s 4.5s both; }}
     </style>
   </defs>
-  <g class="delayed">
+  <g opacity="0">
+    {anim}
     <text x="{W//2}" y="55" text-anchor="middle"
       font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
     <text x="{W//2}" y="75" text-anchor="middle"

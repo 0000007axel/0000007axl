@@ -2,11 +2,10 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
-      @keyframes popIn { to { opacity: 1; } }
-      .delayed { animation: popIn 0.01s 4.5s both; }
     </style>
   </defs>
-  <g class="delayed">
+  <g opacity="0">
+    <animate attributeName="opacity" from="0" to="1" dur="0.01s" begin="4.5s" fill="freeze"/>
     <text x="340" y="55" text-anchor="middle"
       font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
     <text x="340" y="75" text-anchor="middle"
