@@ -43,5 +43,5 @@ I use NeoVim btw.
 
 ### quests
 
-- 🛠️ I'm working on:
-- 🌱 I'm learning: Algorithms, Data Structures, System and Network Administration
+- 🛠️ I'm working on: improving my skills in data structures and algorithms
+- 🌱 I'm learning: C, Python, Vim commands, ...
