@@ -39,10 +39,10 @@ def fetch_leetcode():
         solved   = {s["difficulty"]:s["count"] for s in stats}
         all_tags = (tag_data.get("fundamental",[])+tag_data.get("intermediate",[])+tag_data.get("advanced",[]))
         top_tags = sorted([t for t in all_tags if t["problemsSolved"]>0],key=lambda t:-t["problemsSolved"])[:5]
-        return {"total":solved.get("All",0),"easy":solved.get("Easy",0),"medium":solved.get("Medium",0),"tags":top_tags}
+        return {"total":solved.get("All",0),"easy":solved.get("Easy",0),"medium":solved.get("Medium",0),"hard":solved.get("Hard",0),"tags":top_tags}
     except Exception as e:
         print(f"LeetCode failed: {e}")
-        return {"total":0,"easy":0,"medium":0,"tags":[]}
+        return {"total":0,"easy":0,"medium":0,"hard":0,"tags":[]}
 
 # ── SVG helpers ───────────────────────────────────────────────────────────────
 
@@ -87,7 +87,7 @@ def build_title_svg():
     </style>
   </defs>
   <text x="{W//2}" y="80" text-anchor="middle"
-    font-family="AxelFraktur,serif" font-size="62" fill="#e6edf3" letter-spacing="4">Axel</text>
+    font-family="AxelFraktur,serif" font-size="62" fill="#e6edf3" letter-spacing="4">axel seth</text>
   <text x="{W//2}" y="110" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
   <text x="{W//2}" y="136" text-anchor="middle"
@@ -149,12 +149,13 @@ def build_contrib_svg(weeks):
 
 def build_leetcode_svg(lc):
     W=680; H=90
-    cw = (W - 100 - 2*16) // 3
+    cw = (W - 100 - 3*16) // 4
     x0 = 50
     cards = (
         stat_card(x0,           0, cw, H, lc["total"],  "SOLVED") +
-        stat_card(x0+cw+16,     0, cw, H, lc["easy"],   "EASY")   +
-        stat_card(x0+(cw+16)*2, 0, cw, H, lc["medium"], "MEDIUM")
+        stat_card(x0+(cw+16),   0, cw, H, lc["easy"],   "EASY")   +
+        stat_card(x0+(cw+16)*2, 0, cw, H, lc["medium"], "MEDIUM") +
+        stat_card(x0+(cw+16)*3, 0, cw, H, lc["hard"],   "HARD")
     )
     # Tag bars
     tags = lc["tags"]
