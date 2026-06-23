@@ -3,24 +3,30 @@ import os, requests, datetime, random
 GH_USER  = os.environ.get("GITHUB_USER",   "0000007axl")
 LC_USER  = os.environ.get("LEETCODE_USER", "AxelSeth")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN",  "")
-GH_HEADERS = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
+GH_HEADERS = {"Accept": "application/vnd.github+json"}
+if GH_TOKEN:
+    GH_HEADERS["Authorization"] = f"Bearer {GH_TOKEN}"
 
 # ── Fetch ─────────────────────────────────────────────────────────────────────
 
 def fetch_github():
-    user  = requests.get(f"https://api.github.com/users/{GH_USER}", headers=GH_HEADERS).json()
-    repos = requests.get(f"https://api.github.com/users/{GH_USER}/repos?per_page=100", headers=GH_HEADERS).json()
-    stars = sum(r.get("stargazers_count",0) for r in repos) if isinstance(repos,list) else 0
-    gql = """query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{
-      totalContributions weeks{contributionDays{date contributionCount}}}}}}"""
-    gql_res = requests.post("https://api.github.com/graphql",
-        headers={**GH_HEADERS,"Content-Type":"application/json"},
-        json={"query":gql,"variables":{"login":GH_USER}}).json()
-    weeks, total = [], 0
     try:
-        cal   = gql_res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-        weeks = cal["weeks"]; total = cal["totalContributions"]
-    except: pass
+        user  = requests.get(f"https://api.github.com/users/{GH_USER}", headers=GH_HEADERS, timeout=10).json()
+        repos = requests.get(f"https://api.github.com/users/{GH_USER}/repos?per_page=100", headers=GH_HEADERS, timeout=10).json()
+    except:
+        user, repos = {}, []
+    stars = sum(r.get("stargazers_count",0) for r in repos) if isinstance(repos,list) else 0
+    weeks, total = [], 0
+    if GH_TOKEN:
+        gql = """query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{
+          totalContributions weeks{contributionDays{date contributionCount}}}}}}"""
+        try:
+            gql_res = requests.post("https://api.github.com/graphql",
+                headers={**GH_HEADERS,"Content-Type":"application/json"},
+                json={"query":gql,"variables":{"login":GH_USER}}, timeout=10).json()
+            cal = gql_res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+            weeks = cal["weeks"]; total = cal["totalContributions"]
+        except: pass
     return {"repos":user.get("public_repos",0),"followers":user.get("followers",0),
             "stars":stars,"contribs":total,"weeks":weeks}
 
