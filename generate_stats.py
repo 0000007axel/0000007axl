@@ -113,7 +113,7 @@ def build_title_svg():
   </defs>
   <g fill="#e6edf3">
 {paths}  </g>
-  <text x="{W//2}" y="116" text-anchor="middle"
+  <text x="{W//2}" y="122" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
   <text x="{W//2}" y="136" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
