@@ -2,6 +2,10 @@
   <img src="title.svg?v=2" width="10000" alt="Axel">
 </p>
 
+<p align="center">
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=300&lines=Seth+Axel" alt="Typing SVG" /></a>
+</p>
+
 <div align="center">
   <img src="https://img.shields.io/badge/42%20Student-000000?style=for-the-badge&logo=42&logoColor=white">
 </div>
