@@ -73,7 +73,7 @@ def build_title_svg():
     W=680; H=150
     # TypographerFrakturUNZ1 font is committed to the repo and read at generation time
     import base64, os
-    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "TypographerFrakturUNZ1_Heavy.ttf")
+    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "flyerfont.otf")
     with open(font_path, "rb") as f:
         b64 = base64.b64encode(f.read()).decode()
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
@@ -81,7 +81,7 @@ def build_title_svg():
     <style>
       @font-face {{
         font-family: 'AxelFraktur';
-        src: url('data:font/truetype;base64,{b64}') format('truetype');
+        src: url('data:font/opentype;base64,{b64}') format('truetype');
       }}
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
