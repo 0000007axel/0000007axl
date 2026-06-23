@@ -2,8 +2,8 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      .delayed { animation: fadeIn 0.8s ease-in 4.5s both; }
+      @keyframes popIn { to { opacity: 1; } }
+      .delayed { animation: popIn 0.01s 4.5s both; }
     </style>
   </defs>
   <g class="delayed">
