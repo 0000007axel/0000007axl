@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="160" viewBox="0 0 680 160">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&amp;family=IM+Fell+English:ital@0;1&amp;family=Cinzel:wght@400;700&amp;display=swap');</style></defs>
+  <path d="M308 36 C312 31 318 30 321 32 C322 30 325 29 328 30 C331 28 334 29 333 32 C331 33 329 32 328 33 C326 35 323 37 319 36 C317 37 314 37 308 36Z" fill="#c9d1d9" opacity="0.6"/><path d="M352 34 C356 29 361 28 364 30 C365 28 368 27 371 28 C374 26 377 27 376 30 C374 31 372 30 371 31 C369 33 366 35 363 34 C361 35 358 35 352 34Z" fill="#c9d1d9" opacity="0.45"/>
+  <text x="340" y="88" text-anchor="middle"
+    font-family="UnifrakturMaguntia,serif" font-size="58" fill="#e6edf3" letter-spacing="2">Axel</text>
+  <text x="340" y="116" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
+  <text x="340" y="140" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
+</svg>

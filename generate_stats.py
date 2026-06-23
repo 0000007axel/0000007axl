@@ -1,384 +1,191 @@
-import os
-import requests
-import json
-from datetime import datetime, timedelta, timezone
+import os, requests, datetime, random
 
-GH_USER    = os.environ.get("GITHUB_USER", "0000007axl")
-LC_USER    = os.environ.get("LEETCODE_USER", "AxelSeth")
-GH_TOKEN   = os.environ.get("GITHUB_TOKEN", "")
+GH_USER  = os.environ.get("GITHUB_USER",   "0000007axl")
+LC_USER  = os.environ.get("LEETCODE_USER", "AxelSeth")
+GH_TOKEN = os.environ.get("GITHUB_TOKEN",  "")
+GH_HEADERS = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
 
-GH_HEADERS = {
-    "Authorization": f"Bearer {GH_TOKEN}",
-    "Accept": "application/vnd.github+json"
-}
-
-# ── GitHub ────────────────────────────────────────────────────────────────────
+# ── Fetch ─────────────────────────────────────────────────────────────────────
 
 def fetch_github():
-    user = requests.get(f"https://api.github.com/users/{GH_USER}", headers=GH_HEADERS).json()
+    user  = requests.get(f"https://api.github.com/users/{GH_USER}", headers=GH_HEADERS).json()
     repos = requests.get(f"https://api.github.com/users/{GH_USER}/repos?per_page=100", headers=GH_HEADERS).json()
-    stars = sum(r.get("stargazers_count", 0) for r in repos) if isinstance(repos, list) else 0
-
-    # Contribution graph via GraphQL (needs token with repo scope)
-    gql = """
-    query($login: String!) {
-      user(login: $login) {
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                date
-                contributionCount
-              }
-            }
-          }
-        }
-      }
-    }
-    """
-    gql_res = requests.post(
-        "https://api.github.com/graphql",
-        headers={**GH_HEADERS, "Content-Type": "application/json"},
-        json={"query": gql, "variables": {"login": GH_USER}}
-    ).json()
-
-    weeks = []
-    total_contributions = 0
+    stars = sum(r.get("stargazers_count",0) for r in repos) if isinstance(repos,list) else 0
+    gql = """query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{
+      totalContributions weeks{contributionDays{date contributionCount}}}}}}"""
+    gql_res = requests.post("https://api.github.com/graphql",
+        headers={**GH_HEADERS,"Content-Type":"application/json"},
+        json={"query":gql,"variables":{"login":GH_USER}}).json()
+    weeks, total = [], 0
     try:
-        cal = gql_res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-        weeks = cal["weeks"]
-        total_contributions = cal["totalContributions"]
-    except Exception:
-        pass
-
-    return {
-        "repos":      user.get("public_repos", 0),
-        "followers":  user.get("followers", 0),
-        "stars":      stars,
-        "contribs":   total_contributions,
-        "weeks":      weeks,
-    }
-
-# ── LeetCode ─────────────────────────────────────────────────────────────────
+        cal   = gql_res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+        weeks = cal["weeks"]; total = cal["totalContributions"]
+    except: pass
+    return {"repos":user.get("public_repos",0),"followers":user.get("followers",0),
+            "stars":stars,"contribs":total,"weeks":weeks}
 
 def fetch_leetcode():
-    query = """
-    query($username: String!) {
-      matchedUser(username: $username) {
-        submitStatsGlobal {
-          acSubmissionNum { difficulty count }
-        }
-        tagProblemCounts {
-          fundamental  { tagName problemsSolved }
-          intermediate { tagName problemsSolved }
-          advanced     { tagName problemsSolved }
-        }
-      }
-    }
-    """
+    q = """query($u:String!){matchedUser(username:$u){
+      submitStatsGlobal{acSubmissionNum{difficulty count}}
+      tagProblemCounts{fundamental{tagName problemsSolved}
+        intermediate{tagName problemsSolved}advanced{tagName problemsSolved}}}}"""
     try:
-        res = requests.post(
-            "https://leetcode.com/graphql",
-            json={"query": query, "variables": {"username": LC_USER}},
-            headers={"Content-Type": "application/json", "Referer": "https://leetcode.com"},
-            timeout=10
-        ).json()
-
-        stats = res["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
+        res = requests.post("https://leetcode.com/graphql",
+            json={"query":q,"variables":{"u":LC_USER}},
+            headers={"Content-Type":"application/json","Referer":"https://leetcode.com"},
+            timeout=10).json()
+        stats    = res["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
         tag_data = res["data"]["matchedUser"]["tagProblemCounts"]
-
-        solved = {s["difficulty"]: s["count"] for s in stats}
-        all_tags = (
-            tag_data.get("fundamental", []) +
-            tag_data.get("intermediate", []) +
-            tag_data.get("advanced", [])
-        )
-        top_tags = sorted(
-            [t for t in all_tags if t["problemsSolved"] > 0],
-            key=lambda t: -t["problemsSolved"]
-        )[:5]
-
-        return {
-            "total":  solved.get("All", 0),
-            "easy":   solved.get("Easy", 0),
-            "medium": solved.get("Medium", 0),
-            "hard":   solved.get("Hard", 0),
-            "tags":   top_tags,
-        }
+        solved   = {s["difficulty"]:s["count"] for s in stats}
+        all_tags = (tag_data.get("fundamental",[])+tag_data.get("intermediate",[])+tag_data.get("advanced",[]))
+        top_tags = sorted([t for t in all_tags if t["problemsSolved"]>0],key=lambda t:-t["problemsSolved"])[:5]
+        return {"total":solved.get("All",0),"easy":solved.get("Easy",0),"medium":solved.get("Medium",0),"tags":top_tags}
     except Exception as e:
-        print(f"LeetCode fetch failed: {e}")
-        return {"total": 0, "easy": 0, "medium": 0, "hard": 0, "tags": []}
+        print(f"LeetCode failed: {e}")
+        return {"total":0,"easy":0,"medium":0,"tags":[]}
 
-# ── Contribution grid ─────────────────────────────────────────────────────────
+# ── SVG helpers ───────────────────────────────────────────────────────────────
 
-def build_contrib_cells(weeks):
-    """Return list of (col, row, level 0-4) tuples for up to 52 weeks."""
-    cells = []
-    max_weeks = 52
-    start_col = max(0, len(weeks) - max_weeks)
-    for wi, week in enumerate(weeks[start_col:]):
-        for di, day in enumerate(week["contributionDays"]):
-            c = day["contributionCount"]
-            if   c == 0: lvl = 0
-            elif c <= 2: lvl = 1
-            elif c <= 5: lvl = 2
-            elif c <= 9: lvl = 3
-            else:        lvl = 4
-            cells.append((wi, di, lvl))
-    return cells
+FONTS = "@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&amp;family=IM+Fell+English:ital@0;1&amp;family=Cinzel:wght@400;700&amp;display=swap');"
 
-FILL = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-
-def contrib_svg(weeks, x0, y0):
-    """Generate SVG <rect> elements for the contribution graph."""
-    cells = build_contrib_cells(weeks)
-    parts = []
-    cell_size = 11
-    gap = 2
-    step = cell_size + gap
-
-    # Month labels
-    MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    last_month = None
-    for wi, week in enumerate(weeks[max(0, len(weeks)-52):]):
-        if week["contributionDays"]:
-            date_str = week["contributionDays"][0]["date"]
-            month = int(date_str[5:7]) - 1
-            if month != last_month:
-                last_month = month
-                mx = x0 + wi * step
-                parts.append(
-                    f'<text x="{mx}" y="{y0 - 6}" font-family="Cinzel, serif" '
-                    f'font-size="7" fill="#8b949e" letter-spacing="0.5">{MONTHS[month]}</text>'
-                )
-
-    # Cells
-    for col, row, lvl in cells:
-        cx = x0 + col * step
-        cy = y0 + row * step
-        color = FILL[lvl]
-        parts.append(
-            f'<rect x="{cx}" y="{cy}" width="{cell_size}" height="{cell_size}" '
-            f'rx="2" fill="{color}"/>'
-        )
-    return "\n".join(parts)
-
-# ── Tag bars ──────────────────────────────────────────────────────────────────
-
-def tag_bars_svg(tags, x0, y0, bar_w=320):
-    parts = []
-    if not tags:
-        return ""
-    max_val = tags[0]["problemsSolved"]
-    row_h = 22
-    for i, tag in enumerate(tags):
-        y = y0 + i * row_h
-        fill_w = int((tag["problemsSolved"] / max_val) * bar_w) if max_val else 0
-        name = tag["tagName"][:18]
-        count = tag["problemsSolved"]
-        parts.append(
-            f'<text x="{x0}" y="{y + 11}" font-family="Cinzel, serif" font-size="8" '
-            f'fill="#8b949e" letter-spacing="1">{name.upper()}</text>'
-            f'<rect x="{x0 + 100}" y="{y + 3}" width="{bar_w}" height="3" rx="1" fill="#21262d"/>'
-            f'<rect x="{x0 + 100}" y="{y + 3}" width="{fill_w}" height="3" rx="1" fill="#8b949e" opacity="0.6"/>'
-            f'<text x="{x0 + 100 + bar_w + 8}" y="{y + 11}" font-family="Cinzel, serif" '
-            f'font-size="8" fill="#8b949e">{count}</text>'
-        )
-    return "\n".join(parts)
-
-# ── SVG assembly ──────────────────────────────────────────────────────────────
-
-def build_svg(gh, lc):
-    W = 680
-    contrib_h = 110   # month label + 7 rows of cells
-    tag_rows  = len(lc["tags"])
-    H = 680 + tag_rows * 22
-
-    # Divider helper
-    def divider(y):
-        return (
-            f'<line x1="40" y1="{y}" x2="{W-40}" y2="{y}" stroke="#30363d" stroke-width="0.5"/>'
-            f'<text x="{W//2}" y="{y + 4}" text-anchor="middle" font-family="serif" '
-            f'font-size="10" fill="#8b949e" letter-spacing="4">✦  ✦  ✦</text>'
-            f'<line x1="40" y1="{y+8}" x2="{W-40}" y2="{y+8}" stroke="#30363d" stroke-width="0.5"/>'
-        )
-
-    def section(label, y):
-        return (
-            f'<text x="40" y="{y}" font-family="Cinzel, serif" font-size="9" '
-            f'fill="#8b949e" letter-spacing="3">{label.upper()}</text>'
-            f'<line x1="{40 + len(label)*8 + 16}" y1="{y - 3}" x2="{W - 40}" y2="{y - 3}" '
-            f'stroke="#30363d" stroke-width="0.5"/>'
-        )
-
-    def stat_card(x, y, w, h, num, label):
-        return (
-            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="2" fill="none" stroke="#30363d" stroke-width="0.5"/>'
-            f'<text x="{x + w//2}" y="{y + h//2 - 4}" text-anchor="middle" '
-            f'font-family="UnifrakturMaguntia, serif" font-size="22" fill="#e6edf3">{num}</text>'
-            f'<text x="{x + w//2}" y="{y + h//2 + 14}" text-anchor="middle" '
-            f'font-family="Cinzel, serif" font-size="7" fill="#8b949e" letter-spacing="1.5">{label.upper()}</text>'
-        )
-
-    # Crows
-    crow1 = (
-        '<path d="M310 52 C314 46 320 45 323 47 C324 45 327 44 330 45 '
-        'C333 43 336 44 335 47 C333 48 331 47 330 48 C328 50 325 52 321 51 '
-        'C319 52 316 52 310 52Z" fill="#c9d1d9" opacity="0.65"/>'
-        '<path d="M309 51 C308 50 309 49 311 50" stroke="#c9d1d9" stroke-width="0.8" opacity="0.5"/>'
-    )
-    crow2 = (
-        '<path d="M350 50 C354 45 359 44 362 46 C363 44 365 43 368 44 '
-        'C370 42 373 43 372 46 C370 47 368 46 367 47 C365 49 362 51 359 50 '
-        'C357 51 354 51 350 50Z" fill="#c9d1d9" opacity="0.5"/>'
+def stat_card(x, y, w, h, num, label):
+    cx = x + w//2
+    return (
+        f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" fill="none" stroke="#30363d" stroke-width="0.8"/>'
+        f'<text x="{cx}" y="{y+h//2-2}" text-anchor="middle" '
+        f'font-family="UnifrakturMaguntia,serif" font-size="24" fill="#e6edf3">{num}</text>'
+        f'<text x="{cx}" y="{y+h//2+18}" text-anchor="middle" '
+        f'font-family="Cinzel,serif" font-size="8" fill="#8b949e" letter-spacing="2">{label}</text>'
     )
 
-    # Corner brackets
-    corners = (
-        '<polyline points="20,20 20,34" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        '<polyline points="20,20 34,20" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="{W-20},20 {W-20},34" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="{W-20},20 {W-34},20" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="20,{H-20} 20,{H-34}" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="20,{H-20} 34,{H-20}" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="{W-20},{H-20} {W-20},{H-34}" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
-        f'<polyline points="{W-20},{H-20} {W-34},{H-20}" stroke="#c9d1d9" stroke-width="1.5" opacity="0.5" fill="none"/>'
+def count_to_level(n):
+    if n==0: return 0
+    if n<=2: return 1
+    if n<=5: return 2
+    if n<=9: return 3
+    return 4
+
+CELL_FILL = ["#21262d","#0e4429","#006d32","#26a641","#39d353"]
+
+# ── Title SVG ─────────────────────────────────────────────────────────────────
+
+def build_title_svg():
+    W=680; H=160
+    crows = (
+        f'<path d="M308 36 C312 31 318 30 321 32 C322 30 325 29 328 30 C331 28 334 29 333 32 '
+        f'C331 33 329 32 328 33 C326 35 323 37 319 36 C317 37 314 37 308 36Z" fill="#c9d1d9" opacity="0.6"/>'
+        f'<path d="M352 34 C356 29 361 28 364 30 C365 28 368 27 371 28 C374 26 377 27 376 30 '
+        f'C374 31 372 30 371 31 C369 33 366 35 363 34 C361 35 358 35 352 34Z" fill="#c9d1d9" opacity="0.45"/>'
     )
-
-    # Shields
-    shields = ["LINUX", "NEOVIM", "C", "PYTHON", "GIT", "ÉCOLE 42"]
-    shield_svg = []
-    sx = 78
-    for s in shields:
-        sw = len(s) * 7 + 24
-        shield_svg.append(
-            f'<rect x="{sx}" y="178" width="{sw}" height="20" rx="2" fill="none" stroke="#30363d" stroke-width="0.5"/>'
-            f'<text x="{sx + 8}" y="192" font-family="Cinzel, serif" font-size="7.5" fill="#8b949e" letter-spacing="1.5">⚔ {s}</text>'
-        )
-        sx += sw + 10
-
-    # GitHub stat cards (4 across)
-    card_w = 130
-    card_h = 52
-    card_y = 280
-    card_gap = 12
-    card_x0 = 40
-    gh_cards = (
-        stat_card(card_x0,                    card_y, card_w, card_h, gh["repos"],     "Repos")    +
-        stat_card(card_x0 + (card_w+card_gap),  card_y, card_w, card_h, gh["followers"], "Followers") +
-        stat_card(card_x0 + (card_w+card_gap)*2, card_y, card_w, card_h, gh["stars"],    "Stars")    +
-        stat_card(card_x0 + (card_w+card_gap)*3, card_y, card_w, card_h, gh["contribs"], "Contributions")
-    )
-
-    # Contribution graph
-    contrib_y0 = 380
-    contrib_cells = contrib_svg(gh["weeks"], 40, contrib_y0 + 14)
-
-    # LeetCode cards (3 across)
-    lc_card_w = 180
-    lc_card_h = 52
-    lc_card_y = 510
-    lc_card_gap = 15
-    lc_card_x0 = 40
-    lc_cards = (
-        stat_card(lc_card_x0,                       lc_card_y, lc_card_w, lc_card_h, lc["total"],  "Solved") +
-        stat_card(lc_card_x0 + lc_card_w+lc_card_gap, lc_card_y, lc_card_w, lc_card_h, lc["easy"],   "Easy")   +
-        stat_card(lc_card_x0 + (lc_card_w+lc_card_gap)*2, lc_card_y, lc_card_w, lc_card_h, lc["medium"], "Medium")
-    )
-
-    tag_y0 = 580
-    tags_svg = tag_bars_svg(lc["tags"], 40, tag_y0)
-
-    quest_y = tag_y0 + tag_rows * 22 + 30
-    quests = (
-        f'<text x="52" y="{quest_y + 16}" font-family="IM Fell English, serif" font-size="13" fill="#c9d1d9">🛠  I\'m working on: —</text>'
-        f'<text x="52" y="{quest_y + 38}" font-family="IM Fell English, serif" font-size="13" fill="#c9d1d9">🌱  I\'m learning: Algorithms, Data Structures, System and Network Administration</text>'
-    )
-
-    footer_y = H - 28
-    footer = (
-        f'<text x="{W//2}" y="{footer_y}" text-anchor="middle" font-family="UnifrakturMaguntia, serif" '
-        f'font-size="13" fill="#8b949e" opacity="0.55" letter-spacing="2">~ I use NeoVim btw ~</text>'
-    )
-
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&amp;family=IM+Fell+English:ital@0;1&amp;family=Cinzel:wght@400;700&amp;display=swap');
-    </style>
-  </defs>
-
-  <!-- Background -->
-  <rect width="{W}" height="{H}" fill="#0d1117"/>
-
-  <!-- Outer border -->
-  <rect x="16" y="16" width="{W-32}" height="{H-32}" fill="none" stroke="#30363d" stroke-width="1"/>
-
-  <!-- Corner brackets -->
-  {corners}
-
-  <!-- Crows -->
-  {crow1}
-  {crow2}
-
-  <!-- Title -->
-  <text x="{W//2}" y="100" text-anchor="middle" font-family="UnifrakturMaguntia, serif" font-size="52" fill="#e6edf3" letter-spacing="2">Axel</text>
-  <text x="{W//2}" y="126" text-anchor="middle" font-family="IM Fell English, serif" font-style="italic" font-size="14" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
-  <text x="{W//2}" y="146" text-anchor="middle" font-family="IM Fell English, serif" font-style="italic" font-size="12" fill="#8b949e" opacity="0.75">he/him · Junior C &amp; Python Dev</text>
-
-  <!-- Shields -->
-  {"".join(shield_svg)}
-
-  <!-- Divider 1 -->
-  {divider(212)}
-
-  <!-- About -->
-  {section("About", 244)}
-  <text x="40" y="264" font-family="IM Fell English, serif" font-size="13" fill="#c9d1d9">Student at <tspan font-weight="bold" fill="#e6edf3">École 42</tspan> — learning through projects, ego, and pain.</text>
-  <text x="40" y="282" font-family="IM Fell English, serif" font-size="13" fill="#c9d1d9">Building things in C from scratch. Occasionally writing Python when I want to feel productive.</text>
-  <text x="40" y="300" font-family="IM Fell English, serif" font-size="13" fill="#c9d1d9">Algorithms enthusiast. Linux native. Living in the terminal. I use NeoVim btw.</text>
-
-  <!-- GitHub -->
-  {section("GitHub", 340)}
-  {gh_cards}
-
-  <!-- Contributions -->
-  {section("Contributions", 374)}
-  {contrib_cells}
-
-  <!-- LeetCode -->
-  {section("LeetCode", 500)}
-  {lc_cards}
-
-  <!-- Tags -->
-  {tags_svg}
-
-  <!-- Quests -->
-  {section("Quests", quest_y)}
-  {quests}
-
-  <!-- Divider 2 -->
-  {divider(H - 56)}
-
-  <!-- Footer -->
-  {footer}
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+  <defs><style>{FONTS}</style></defs>
+  {crows}
+  <text x="{W//2}" y="88" text-anchor="middle"
+    font-family="UnifrakturMaguntia,serif" font-size="58" fill="#e6edf3" letter-spacing="2">Axel</text>
+  <text x="{W//2}" y="116" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[æk.səl]</text>
+  <text x="{W//2}" y="140" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
 
-    return svg
+# ── GitHub stats SVG ──────────────────────────────────────────────────────────
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+def build_github_svg(gh):
+    W=680; H=90
+    cw = (W - 100 - 3*12) // 4
+    x0 = 50
+    cards = (
+        stat_card(x0,              0, cw, H, gh["repos"],     "REPOS")        +
+        stat_card(x0+cw+12,        0, cw, H, gh["followers"], "FOLLOWERS")    +
+        stat_card(x0+(cw+12)*2,    0, cw, H, gh["stars"],     "STARS")        +
+        stat_card(x0+(cw+12)*3,    0, cw, H, gh["contribs"],  "CONTRIBUTIONS")
+    )
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+  <defs><style>{FONTS}</style></defs>
+  {cards}
+</svg>"""
+
+# ── Contribution graph SVG ────────────────────────────────────────────────────
+
+def build_contrib_svg(weeks):
+    MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    MAX=46; CELL=11; GAP=2; STEP=CELL+GAP
+    graph_w = MAX*STEP - GAP          # 596
+    W = graph_w + 80                  # 676 — add margins
+    x0 = (W - graph_w) // 2          # centered
+    H = 120
+    use_weeks = weeks[-MAX:] if len(weeks)>MAX else weeks
+    parts = []
+    last_month = None
+    for wi, week in enumerate(use_weeks):
+        days = week.get("contributionDays",[])
+        if days:
+            m = int(days[0]["date"][5:7])-1
+            if m != last_month:
+                last_month = m
+                parts.append(
+                    f'<text x="{x0+wi*STEP}" y="14" font-family="Cinzel,serif" '
+                    f'font-size="7" fill="#8b949e" letter-spacing="0.5">{MONTHS[m]}</text>'
+                )
+        for di, day in enumerate(days):
+            lvl = count_to_level(day["contributionCount"])
+            parts.append(
+                f'<rect x="{x0+wi*STEP}" y="{20+di*STEP}" '
+                f'width="{CELL}" height="{CELL}" rx="2" fill="{CELL_FILL[lvl]}"/>'
+            )
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+  <defs><style>{FONTS}</style></defs>
+  {"".join(parts)}
+</svg>"""
+
+# ── LeetCode stats SVG ────────────────────────────────────────────────────────
+
+def build_leetcode_svg(lc):
+    W=680; H=90
+    cw = (W - 100 - 2*16) // 3
+    x0 = 50
+    cards = (
+        stat_card(x0,           0, cw, H, lc["total"],  "SOLVED") +
+        stat_card(x0+cw+16,     0, cw, H, lc["easy"],   "EASY")   +
+        stat_card(x0+(cw+16)*2, 0, cw, H, lc["medium"], "MEDIUM")
+    )
+    # Tag bars
+    tags = lc["tags"]
+    BAR_Y = H + 20
+    bar_parts = []
+    if tags:
+        max_val = tags[0]["problemsSolved"]
+        BAR_W = 290; ROW_H = 28
+        for i, tag in enumerate(tags):
+            y  = BAR_Y + i*ROW_H
+            fw = int((tag["problemsSolved"]/max_val)*BAR_W) if max_val else 0
+            bar_parts.append(
+                f'<text x="50" y="{y+13}" font-family="Cinzel,serif" font-size="8" fill="#8b949e" letter-spacing="1">'
+                f'{tag["tagName"][:16].upper()}</text>'
+                f'<rect x="170" y="{y+7}" width="{BAR_W}" height="3" rx="1" fill="#21262d"/>'
+                f'<rect x="170" y="{y+7}" width="{fw}" height="3" rx="1" fill="#8b949e" opacity="0.6"/>'
+                f'<text x="{170+BAR_W+10}" y="{y+13}" font-family="Cinzel,serif" font-size="8" fill="#8b949e">'
+                f'{tag["problemsSolved"]}</text>'
+            )
+    total_h = BAR_Y + len(tags)*28 + 10 if tags else H
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{total_h}" viewBox="0 0 {W} {total_h}">
+  <defs><style>{FONTS}</style></defs>
+  {cards}
+  {"".join(bar_parts)}
+</svg>"""
+
+# ── Write all SVGs ────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Fetching GitHub stats...")
+    print("Fetching GitHub...")
     gh = fetch_github()
     print(f"  repos={gh['repos']} followers={gh['followers']} stars={gh['stars']} contribs={gh['contribs']}")
-
-    print("Fetching LeetCode stats...")
+    print("Fetching LeetCode...")
     lc = fetch_leetcode()
-    print(f"  total={lc['total']} easy={lc['easy']} medium={lc['medium']} tags={[t['tagName'] for t in lc['tags']]}")
+    print(f"  total={lc['total']} easy={lc['easy']} medium={lc['medium']}")
 
-    svg = build_svg(gh, lc)
-    with open("stats.svg", "w", encoding="utf-8") as f:
-        f.write(svg)
-    print("stats.svg written.")
+    with open("title.svg",   "w") as f: f.write(build_title_svg())
+    with open("github.svg",  "w") as f: f.write(build_github_svg(gh))
+    with open("contrib.svg", "w") as f: f.write(build_contrib_svg(gh["weeks"]))
+    with open("leetcode.svg","w") as f: f.write(build_leetcode_svg(lc))
+    print("All SVGs written.")

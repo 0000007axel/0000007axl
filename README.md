@@ -1,3 +1,47 @@
 <p align="center">
-  <img src="stats.svg" alt="Axel's Stats" width="680"/>
+  <img src="title.svg" width="680" alt="Axel">
 </p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Linux-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Neovim-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Git-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/C-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Python-black?style=for-the-badge" />
+</p>
+
+---
+
+### about
+
+Student at **École 42** — learning through projects, ego, and pain.
+Building things in C from scratch. Occasionally writing Python when I want to feel productive.
+Algorithms enthusiast. Linux native. Living in the terminal.
+I use NeoVim btw.
+
+---
+
+### github
+
+<p align="center">
+  <img src="github.svg" width="680" alt="GitHub Stats">
+</p>
+
+<p align="center">
+  <img src="contrib.svg" width="680" alt="Contributions">
+</p>
+
+---
+
+### leetcode
+
+<p align="center">
+  <img src="leetcode.svg" width="680" alt="LeetCode Stats">
+</p>
+
+---
+
+### quests
+
+- 🛠️ I'm working on:
+- 🌱 I'm learning: Algorithms, Data Structures, System and Network Administration
