@@ -115,7 +115,7 @@ def build_title_svg():
 {paths}  </g>
   <text x="{W//2}" y="122" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-  <text x="{W//2}" y="136" text-anchor="middle"
+  <text x="{W//2}" y="142" text-anchor="middle"
     font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
 
@@ -187,11 +187,11 @@ def build_leetcode_svg(lc):
     BAR_Y = H + 20
     bar_parts = []
     if tags:
-        max_val = tags[0]["problemsSolved"]
+        total_val = lc["total"]
         BAR_W = 290; ROW_H = 28
         for i, tag in enumerate(tags):
             y  = BAR_Y + i*ROW_H
-            fw = int((tag["problemsSolved"]/max_val)*BAR_W) if max_val else 0
+            fw = int((tag["problemsSolved"]/total_val)*BAR_W) if total_val else 0
             bar_parts.append(
                 f'<text x="50" y="{y+13}" font-family="Cinzel,serif" font-size="8" fill="#8b949e" letter-spacing="1">'
                 f'{tag["tagName"][:16].upper()}</text>'
