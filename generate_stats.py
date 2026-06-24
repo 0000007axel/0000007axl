@@ -30,9 +30,18 @@ def fetch_github():
     if not weeks:
         try:
             cal = requests.get(f"https://github-contributions-api.jogruber.de/v4/{GH_USER}?y=2026", timeout=10).json()
-            weeks = cal.get("contributions", [])
-            total = sum(d.get("count",0) for d in weeks)
-            weeks = [{"contributionDays": [{"date": d["date"], "contributionCount": d["count"]} for d in weeks]}]
+            contribs = cal.get("contributions", [])
+            total = sum(d.get("count",0) for d in contribs)
+            from collections import OrderedDict
+            groups = OrderedDict()
+            for d in contribs:
+                dt = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
+                monday = dt - datetime.timedelta(days=dt.weekday())
+                groups.setdefault(monday, []).append(d)
+            weeks = []
+            for monday in sorted(groups):
+                days = sorted(groups[monday], key=lambda x: x["date"])
+                weeks.append({"contributionDays": [{"date": d["date"], "contributionCount": d["count"]} for d in days]})
         except: pass
     return {"repos":user.get("public_repos",0),"followers":user.get("followers",0),
             "stars":stars,"contribs":total,"weeks":weeks}
