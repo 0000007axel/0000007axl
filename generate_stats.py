@@ -124,7 +124,7 @@ def build_title_svg():
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <image href="banner-19.gif" width="{W}" height="{gif_display_h}" />
+  <image href="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="{W}" height="{gif_display_h}" />
   <g transform="translate(0, {gif_mid}) scale({sc:.4f})">
 {inner}
   </g>
