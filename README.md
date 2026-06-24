@@ -14,7 +14,7 @@
 </div>
 
 
-## a b o u t
+## w h o a m i  -  自 己 紹 介
 
 Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.
@@ -25,7 +25,7 @@ I use NeoVim btw.
 </div>
 
 
-## g i t h u b
+## g i t h u b  -  ギ ッ ト ハ ブ
 
 <p align="center">
   <img src="github.svg" width="680" alt="GitHub Stats">
@@ -36,7 +36,7 @@ I use NeoVim btw.
 </p>
 
 
-## l e e t c o d e
+## l e e t c o d e  -  リ ー ト コ ー ド
 
 <p align="center">
   <img src="leetcode.svg" width="680" alt="LeetCode Stats">
@@ -44,7 +44,7 @@ I use NeoVim btw.
 
 ---
 
-### quests
+### quests  -  現 在 学 習 中
 
 - 🛠️ I'm working on: improving my skills in data structures and algorithms
 - 🌱 I'm learning: C, Python, Vim commands, ...
