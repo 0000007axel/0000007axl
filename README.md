@@ -1,6 +1,11 @@
 <p align="center">
-  <img src="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="680" alt="" style="display: block; margin-bottom: -251px;">
-  <img src="title.svg?v=5" width="680" alt="Axel" style="display: block; margin: 0 auto;">
+  <table align="center">
+    <tr>
+      <td width="680" height="251" background="https://i.ibb.co/VchbwZ1b/banner-19.gif">
+        <img src="title.svg?v=5" width="680" alt="Axel">
+      </td>
+    </tr>
+  </table>
 </p>
 
 <div align="center">

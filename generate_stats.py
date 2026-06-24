@@ -109,12 +109,12 @@ def build_title_svg():
     inner = g4.split("<svg", 1)[1]
     inner = inner.split(">", 1)[1]
     inner = inner.rsplit("</svg>", 1)[0]
-    sc = W / 204.37494
+    sc = W / 204.37494 / 2
     g4_h = 50.076725 * sc
     title_ofs = 125
-    ipa_y = int(title_ofs + g4_h + 28)
-    sub_y = ipa_y + 20
-    H = sub_y + 20
+    ipa_y = 225
+    sub_y = 240
+    H = 251
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
