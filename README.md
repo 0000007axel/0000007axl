@@ -1,6 +1,7 @@
 <p align="center">
   <img src="title.svg" width="680" alt="Axel">
   <br>
+  <br>
   <img src="subtitle.svg" width="680" alt="subtitle">
 </p>
 
@@ -23,7 +24,7 @@ Building things in C from scratch. Occasionally writing Python when I want to fe
 I use NeoVim btw.
 
 <div align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&duration=4000&color=FFFFFF&center=true&vCenter=true&random=true&width=450&height=40&lines=Algorithms+optimizer.;Living+in+the+terminal;Linux+native.;Neovim+exclusive.;Dotfiles+craftsman.;Kanagawa+wave." alt="Typing SVG" /></a>
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=24&duration=4000&color=ACACAC&center=true&vCenter=true&random=true&width=450&height=40&lines=Algorithms+optimizer.;Living+in+the+terminal;Linux+native.;Neovim+exclusive.;Dotfiles+craftsman.;Kanagawa+wave." alt="Typing SVG" /></a>
 </div>
 
 ---
