@@ -1,6 +1,6 @@
 <p align="center">
   <img src="title.svg" width="700" alt="Axel">
-  <img src="subtitle.svg" width="500" alt="subtitle">
+  <img src="subtitle.svg" width="650" alt="subtitle">
 </p>
 
 <div align="center">
