@@ -103,10 +103,6 @@ def glyph_paths(font_path, text="seth axel", font_size=62.0):
 def build_title_svg():
     import os
     W=680
-    GIF_W, GIF_H = 558, 206
-    gif_display_h = int(GIF_H * W / GIF_W)  # 251
-    gif_mid = gif_display_h // 2            # 125
-    # Read g4.svg and scale it
     g4_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "g4.svg")
     with open(g4_path) as f:
         g4 = f.read()
@@ -115,17 +111,17 @@ def build_title_svg():
     inner = inner.rsplit("</svg>", 1)[0]
     sc = W / 204.37494
     g4_h = 50.076725 * sc
-    ipa_y = int(gif_mid + g4_h + 28)
+    title_ofs = 125
+    ipa_y = int(title_ofs + g4_h + 28)
     sub_y = ipa_y + 20
-    H = max(gif_display_h, sub_y + 20)
+    H = sub_y + 20
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <image href="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="{W}" height="{gif_display_h}" />
-  <g transform="translate(0, {gif_mid}) scale({sc:.4f})">
+  <g transform="translate(0, {title_ofs}) scale({sc:.4f})">
 {inner}
   </g>
   <text x="{W//2}" y="{ipa_y}" text-anchor="middle"
