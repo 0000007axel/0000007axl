@@ -110,6 +110,7 @@ def build_title_svg():
     inner = inner.split(">", 1)[1]
     inner = inner.rsplit("</svg>", 1)[0]
     sc = W / 204.37494 / 2
+    title_x = int(W / 2 - 204.37494 * sc / 2)
     title_ofs = 0
     ipa_y = 110
     sub_y = 130
@@ -120,7 +121,7 @@ def build_title_svg():
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <g transform="translate(0, {title_ofs}) scale({sc:.4f})">
+  <g transform="translate({title_x}, {title_ofs}) scale({sc:.4f})">
 {inner}
   </g>
   <text x="{W//2}" y="{ipa_y}" text-anchor="middle"
