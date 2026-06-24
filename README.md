@@ -2,7 +2,7 @@
   <img src="title.svg" width="800" alt="Axel">
   <br>
   <br>
-  <img src="subtitle.svg" width="680" alt="subtitle">
+  <img src="subtitle.svg" width="500" alt="subtitle">
 </p>
 
 <div align="center">
