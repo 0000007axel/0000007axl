@@ -13,19 +13,25 @@
   <img src="https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=white" />
 </div>
 
+&nbsp;
+&nbsp;
+&nbsp;
 
-## w h o a m i  -  自 己 紹 介
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Noto+Serif+JP&weight=700&duration=4000&color=ACACAC&vCenter=true&width=385&height=30&lines=w+h+o+a+m+i;%E8%87%AA++%E5%B7%B1++%E7%B4%B9++%E4%BB%8B" alt="Typing SVG" /></a>
 
-Student at **École 42** — learning through projects, ego, and pain.
+---
+
+  Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.
 I use NeoVim btw.
 
-<div align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=24&duration=4000&color=77777777&center=true&vCenter=true&random=true&width=450&height=40&lines=Algorithms+optimizer.;Living+in+the+terminal;Linux+native.;Neovim+exclusive.;Dotfiles+craftsman.;Kanagawa+wave." alt="Typing SVG" /></a>
-</div>
+&nbsp;
+&nbsp;
+&nbsp;
 
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Noto+Serif+JP&weight=700&duration=4000&color=AAAAAA&vCenter=true&width=385&height=30&lines=g+i+t+h+u+b;%E3%82%AE+%E3%83%83+%E3%83%88+%E3%83%8F+%E3%83%96" alt="Typing SVG" /></a>
 
-## g i t h u b  -  ギ ッ ト ハ ブ
+---
 
 <p align="center">
   <img src="github.svg" width="680" alt="GitHub Stats">
@@ -35,8 +41,13 @@ I use NeoVim btw.
   <img src="contrib.svg" width="680" alt="Contributions">
 </p>
 
+&nbsp;
+&nbsp;
+&nbsp;
 
-## l e e t c o d e  -  リ ー ト コ ー ド
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Noto+Serif+JP&weight=700&duration=4000&color=AAAAAA&vCenter=true&width=385&height=30&lines=l+e+e+t+c+o+d+e;%E3%83%AA+%E3%83%BC+%E3%83%88+%E3%82%B3+%E3%83%BC+%E3%83%89" alt="Typing SVG" /></a>
+
+---
 
 <p align="center">
   <img src="leetcode.svg" width="680" alt="LeetCode Stats">
