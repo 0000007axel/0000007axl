@@ -110,7 +110,8 @@ def build_title_svg():
     inner = inner.split(">", 1)[1]
     inner = inner.rsplit("</svg>", 1)[0]
     sc = W / 204.37494 / 2
-    title_x = int(W / 2 - 204.37494 * sc / 2)
+    g4_xoff = -3.3807975 + -2.9924433
+    title_x = int(W / 2 - (204.37494 / 2 + g4_xoff) * sc)
     title_ofs = 0
     ipa_y = 110
     sub_y = 130
