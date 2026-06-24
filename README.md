@@ -1,7 +1,5 @@
 <p align="center">
   <img src="title.svg" width="700" alt="Axel">
-  <br>
-  <br>
   <img src="subtitle.svg" width="500" alt="subtitle">
 </p>
 
