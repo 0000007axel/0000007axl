@@ -1,7 +1,4 @@
 <p align="center">
-  <img src="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="680" alt="">
-</p>
-<p align="center">
   <img src="title.svg?v=5" width="680" alt="Axel">
 </p>
 
