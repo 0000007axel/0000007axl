@@ -53,9 +53,14 @@ I use NeoVim btw.
   <img src="leetcode.svg" width="680" alt="LeetCode Stats">
 </p>
 
----
+&nbsp;
+&nbsp;
+&nbsp;
 
-### quests  -  現 在 学 習 中
+
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Noto+Serif+JP&weight=700&duration=4000&color=AAAAAA&vCenter=true&width=385&height=30&lines=l+e+a+r+n+i+n+g;%E7%8F%BE+%E5%9C%A8+%E5%AD%A6+%E7%BF%92+%E4%B8%AD" alt="Typing SVG" /></a>
+
+---
 
 - 🛠️ I'm working on: improving my skills in data structures and algorithms
 - 🌱 I'm learning: C, Python, Vim commands, ...
