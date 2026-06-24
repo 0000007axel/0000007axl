@@ -70,6 +70,70 @@ def fetch_leetcode():
 
 FONTS = "@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&amp;family=IM+Fell+English:ital@0;1&amp;family=Cinzel:wght@400;700&amp;display=swap');"
 
+# ── Cal-Heatmap inspired options ──────────────────────────────────────────────
+
+CAL = {
+    "scale": {
+        "type": "quantize",
+        "range": ["#21262d","#0e4429","#006d32","#26a641","#39d353"],
+        "domain": [0, 1, 3, 6, 10],
+    },
+    "subDomain": {
+        "width": 11,
+        "height": 11,
+        "gutter": 2,
+        "radius": 2,
+    },
+    "domain": {
+        "label": {"font": "Cinzel,serif", "size": 7, "color": "#8b949e"},
+    },
+    "theme": "dark",
+}
+
+THEMES = {
+    "dark":  {"bg": "#0d1117", "muted": "#8b949e", "border": "#30363d"},
+    "light": {"bg": "#ffffff", "muted": "#656d76", "border": "#d0d7de"},
+}
+
+def hex_to_rgb(h):
+    h = h.lstrip("#")
+    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+def rgb_to_hex(rgb):
+    return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
+
+def lerp_color(c1, c2, t):
+    r1, g1, b1 = hex_to_rgb(c1)
+    r2, g2, b2 = hex_to_rgb(c2)
+    return rgb_to_hex((int(r1 + (r2 - r1) * t), int(g1 + (g2 - g1) * t), int(b1 + (b2 - b1) * t)))
+
+def scale_color(value, cfg):
+    st = cfg["type"]
+    dom = cfg["domain"]
+    rng = cfg["range"]
+    if st == "quantize":
+        for i in range(len(dom) - 1, 0, -1):
+            if value >= dom[i]:
+                return rng[i] if i < len(rng) else rng[-1]
+        return rng[0]
+    elif st == "ordinal":
+        return rng[value % len(rng)]
+    elif st == "threshold":
+        for i, t in enumerate(dom):
+            if value <= t:
+                return rng[i] if i < len(rng) else rng[-1]
+        return rng[-1]
+    else:
+        dmin, dmax = dom[0], dom[-1]
+        if dmax == dmin:
+            return rng[-1]
+        t = max(0, min(1, (value - dmin) / (dmax - dmin)))
+        seg = len(rng) - 1
+        idx = t * seg
+        lo = int(idx)
+        hi = min(lo + 1, len(rng) - 1)
+        return lerp_color(rng[lo], rng[hi], idx - lo)
+
 def stat_card(x, y, w, h, num, label):
     cx = x + w//2
     return (
@@ -80,14 +144,8 @@ def stat_card(x, y, w, h, num, label):
         f'font-family="Cinzel,serif" font-size="8" fill="#8b949e" letter-spacing="2">{label}</text>'
     )
 
-def count_to_level(n):
-    if n==0: return 0
-    if n<=2: return 1
-    if n<=5: return 2
-    if n<=9: return 3
-    return 4
-
-CELL_FILL = ["#21262d","#0e4429","#006d32","#26a641","#39d353"]
+def empty_cell(cfg):
+    return scale_color(0, cfg["scale"])
 
 # ── Title SVG ─────────────────────────────────────────────────────────────────
 
@@ -248,31 +306,45 @@ def build_github_svg(gh):
 
 # ── Contribution graph SVG ────────────────────────────────────────────────────
 
-def build_contrib_svg(weeks):
+def build_contrib_svg(weeks, cfg=None):
+    if cfg is None:
+        cfg = CAL
+    th = THEMES[cfg["theme"]]
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    MAX=46; CELL=11; GAP=2; STEP=CELL+GAP
-    graph_w = MAX*STEP - GAP          # 596
-    W = graph_w + 80                  # 676 — add margins
-    x0 = (W - graph_w) // 2          # centered
-    H = 120
-    use_weeks = weeks[-MAX:] if len(weeks)>MAX else weeks
+    MAX = 46
+    CELL = cfg["subDomain"]["width"]
+    GAP = cfg["subDomain"]["gutter"]
+    RAD = cfg["subDomain"]["radius"]
+    STEP = CELL + GAP
+    graph_w = MAX * STEP - GAP
+    MARGIN = 40
+    W = graph_w + MARGIN * 2
+    x0 = (W - graph_w) // 2
+    LABEL_H = 18
+    H = LABEL_H + 7 * STEP + 6
+    use_weeks = weeks[-MAX:] if len(weeks) > MAX else weeks
     parts = []
     last_month = None
     for wi, week in enumerate(use_weeks):
-        days = week.get("contributionDays",[])
+        days = week.get("contributionDays", [])
         if days:
-            m = int(days[0]["date"][5:7])-1
+            m = int(days[0]["date"][5:7]) - 1
             if m != last_month:
                 last_month = m
                 parts.append(
-                    f'<text x="{x0+wi*STEP}" y="14" font-family="Cinzel,serif" '
-                    f'font-size="7" fill="#8b949e" letter-spacing="0.5">{MONTHS[m]}</text>'
+                    f'<text x="{x0 + wi * STEP}" y="{LABEL_H - 4}" '
+                    f'font-family="{cfg["domain"]["label"]["font"]}" '
+                    f'font-size="{cfg["domain"]["label"]["size"]}" '
+                    f'fill="{th["muted"]}">{MONTHS[m]}</text>'
                 )
         for di, day in enumerate(days):
-            lvl = count_to_level(day["contributionCount"])
+            color = scale_color(day["contributionCount"], cfg["scale"])
+            x = x0 + wi * STEP
+            y = LABEL_H + di * STEP
             parts.append(
-                f'<rect x="{x0+wi*STEP}" y="{20+di*STEP}" '
-                f'width="{CELL}" height="{CELL}" rx="2" fill="{CELL_FILL[lvl]}"/>'
+                f'<rect x="{x}" y="{y}" '
+                f'width="{CELL}" height="{CELL}" '
+                f'rx="{RAD}" fill="{color}"/>'
             )
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs><style>{FONTS}</style></defs>
