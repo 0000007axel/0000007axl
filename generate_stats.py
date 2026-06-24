@@ -27,6 +27,13 @@ def fetch_github():
             cal = gql_res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
             weeks = cal["weeks"]; total = cal["totalContributions"]
         except: pass
+    if not weeks:
+        try:
+            cal = requests.get(f"https://github-contributions-api.jogruber.de/v4/{GH_USER}?y=2026", timeout=10).json()
+            weeks = cal.get("contributions", [])
+            total = sum(d.get("count",0) for d in weeks)
+            weeks = [{"contributionDays": [{"date": d["date"], "contributionCount": d["count"]} for d in weeks]}]
+        except: pass
     return {"repos":user.get("public_repos",0),"followers":user.get("followers",0),
             "stars":stars,"contribs":total,"weeks":weeks}
 
