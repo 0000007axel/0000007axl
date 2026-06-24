@@ -1,12 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="145" viewBox="0 0 680 145">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
-    </style>
-  </defs>
-  <g transform="translate(340, 0)">
-    <g transform="translate(-161, 0) scale(1.6636)">
-
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="90" viewBox="0 0 680 90">
+  <g transform="translate(340, 45)">
+    <g transform="translate(-161, -25) scale(1.6636)">
   <defs
      id="defs1" />
   <g
@@ -33,11 +27,6 @@
          aria-label="S" />
     </g>
   </g>
-
     </g>
-    <text x="0" y="111" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-    <text x="0" y="131" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
   </g>
 </svg>

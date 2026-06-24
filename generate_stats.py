@@ -113,24 +113,27 @@ def build_title_svg():
     g4_xoff = -3.3807975 + -2.9924433
     g4_center = (204.37494 / 2 + g4_xoff) * sc
     g4_adjust = -round(g4_center) - 2
-    ipa_y = 111
-    sub_y = 131
-    H = 145
+    H = 90
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+  <g transform="translate({W//2}, {H//2})">
+    <g transform="translate({g4_adjust}, -25) scale({sc:.4f})">
+{inner}
+    </g>
+  </g>
+</svg>"""
+
+def build_subtitle_svg():
+    W=680
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="40" viewBox="0 0 {W} 40">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <g transform="translate({W//2}, 0)">
-    <g transform="translate({g4_adjust}, 0) scale({sc:.4f})">
-{inner}
-    </g>
-    <text x="0" y="{ipa_y}" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-    <text x="0" y="{sub_y}" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
-  </g>
+  <text x="{W//2}" y="18" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
+  <text x="{W//2}" y="35" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
 
 
@@ -231,7 +234,8 @@ if __name__ == "__main__":
     lc = fetch_leetcode()
     print(f"  total={lc['total']} easy={lc['easy']} medium={lc['medium']}")
 
-    with open("title.svg",   "w") as f: f.write(build_title_svg())
+    with open("title.svg",    "w") as f: f.write(build_title_svg())
+    with open("subtitle.svg", "w") as f: f.write(build_subtitle_svg())
     with open("github.svg",  "w") as f: f.write(build_github_svg(gh))
     with open("contrib.svg", "w") as f: f.write(build_contrib_svg(gh["weeks"]))
     with open("leetcode.svg","w") as f: f.write(build_leetcode_svg(lc))
