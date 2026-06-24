@@ -1,7 +1,7 @@
 <p align="center">
   <table align="center">
     <tr>
-      <td width="680" height="251" background="https://i.ibb.co/VchbwZ1b/banner-19.gif">
+      <td width="680" height="251" style="background: url('https://i.ibb.co/VchbwZ1b/banner-19.gif') no-repeat; background-size: 680px 251px;" align="center">
         <img src="title.svg?v=5" width="680" alt="Axel">
       </td>
     </tr>
