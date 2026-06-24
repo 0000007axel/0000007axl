@@ -101,21 +101,35 @@ def glyph_paths(font_path, text="seth axel", font_size=62.0):
     return glyphs
 
 def build_title_svg():
-    W=680; H=100
-    anim = '<animate attributeName="opacity" from="0" to="1" dur="0.01s" begin="4.5s" fill="freeze"/>'
+    import os
+    W=680
+    g4_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "g4.svg")
+    with open(g4_path) as f:
+        g4 = f.read()
+    # Extract <defs> and the layer <g> from g4.svg, strip xml decl / outer <svg>
+    inner = g4.split("<svg", 1)[1]
+    inner = inner.split(">", 1)[1]
+    inner = inner.rsplit("</svg>", 1)[0]
+    # Scale g4 content to fit W, lighten fill to #e6edf3
+    sc = W / 204.37494
+    g4_h = 50.076725 * sc
+    gap = 16
+    H = int(g4_h + gap + 70)
+    ipa_y = int(g4_h + gap + 22)
+    sub_y = ipa_y + 20
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <g opacity="0">
-    {anim}
-    <text x="{W//2}" y="55" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-    <text x="{W//2}" y="75" text-anchor="middle"
-      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
+  <g transform="translate(0, 0) scale({sc:.4f})">
+{inner}
   </g>
+  <text x="{W//2}" y="{ipa_y}" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
+  <text x="{W//2}" y="{sub_y}" text-anchor="middle"
+    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
 
 

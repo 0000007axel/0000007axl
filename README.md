@@ -1,27 +1,6 @@
-<div align="center" style="display: flex; flex-direction: column; align-items: center; gap: 0;">
-
-  <!-- Big name (unchanged) -->
-  <a href="https://git.io/typing-svg" style="display: block; line-height: 0; margin: 0;">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+24&size=200&pause=1000&color=FFFFFFFF&center=true&vCenter=true&repeat=false&width=1000&height=200&lines=Seth+Axel" alt="Typing SVG" style="display: block; margin: 0;">
-  </a>
-
-  <!-- Subtitle block with IPA + info -->
-  <div style="
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: #101010;
-    margin: 0;
-    margin-top: -40px;     /* adjust to reduce/increase gap */
-    line-height: 1.4;
-    text-align: center;
-    letter-spacing: 0.3px;
-  ">
-    <div><i>[seθ'æk.sæl]</i></div>
-    <div><i>he/him · Junior C & Python Dev</i></div>
-  </div>
-
-</div>
+<p align="center">
+  <img src="title.svg?v=4" width="680" alt="Axel">
+</p>
 
 <div align="center">
   <img src="https://img.shields.io/badge/42%20Student-000000?style=for-the-badge&logo=42&logoColor=white">
@@ -31,7 +10,7 @@
   <img src="https://img.shields.io/badge/Git-black?style=for-the-badge&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/C-black?style=for-the-badge&logo=c&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=white" />
-</p>
+</div>
 
 ---
 

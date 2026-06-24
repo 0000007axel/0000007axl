@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="252" viewBox="0 0 680 252">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
-    </style>
-  </defs>
-  <g transform="translate(0, 0) scale(3.3272)">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
+<svg
+   width="204.37494mm"
+   height="50.076725mm"
+   viewBox="0 0 204.37494 50.076725"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
   <defs
      id="defs1" />
   <g
@@ -32,10 +35,4 @@
          aria-label="S" />
     </g>
   </g>
-
-  </g>
-  <text x="340" y="204" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-  <text x="340" y="224" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>
