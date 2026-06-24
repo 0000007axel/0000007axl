@@ -112,7 +112,7 @@ def build_title_svg():
     sc = W / 204.37494 / 2
     g4_xoff = -3.3807975 + -2.9924433
     g4_center = (204.37494 / 2 + g4_xoff) * sc
-    g4_adjust = -round(g4_center) - 2
+    g4_adjust = -round(g4_center) - 7
     H = 90
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <g transform="translate({W//2}, {H//2})">
