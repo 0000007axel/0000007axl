@@ -111,10 +111,10 @@ def build_title_svg():
     inner = inner.rsplit("</svg>", 1)[0]
     sc = W / 204.37494 / 2
     g4_xoff = -3.3807975 + -2.9924433
-    title_x = int(W / 2 - (204.37494 / 2 + g4_xoff) * sc)
-    title_ofs = 0
-    ipa_y = 110
-    sub_y = 130
+    g4_center = (204.37494 / 2 + g4_xoff) * sc
+    g4_adjust = -round(g4_center)
+    ipa_y = 111
+    sub_y = 131
     H = 145
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
@@ -122,13 +122,15 @@ def build_title_svg():
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <g transform="translate({title_x}, {title_ofs}) scale({sc:.4f})">
+  <g transform="translate({W//2}, 0)">
+    <g transform="translate({g4_adjust}, 0) scale({sc:.4f})">
 {inner}
+    </g>
+    <text x="0" y="{ipa_y}" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
+    <text x="0" y="{sub_y}" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
   </g>
-  <text x="{W//2}" y="{ipa_y}" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-  <text x="{W//2}" y="{sub_y}" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>"""
 
 

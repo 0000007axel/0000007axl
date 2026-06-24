@@ -4,7 +4,8 @@
       @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;display=swap');
     </style>
   </defs>
-  <g transform="translate(180, 0) scale(1.6636)">
+  <g transform="translate(340, 0)">
+    <g transform="translate(-159, 0) scale(1.6636)">
 
   <defs
      id="defs1" />
@@ -33,9 +34,10 @@
     </g>
   </g>
 
+    </g>
+    <text x="0" y="111" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
+    <text x="0" y="131" text-anchor="middle"
+      font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
   </g>
-  <text x="340" y="110" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="15" fill="#8b949e" letter-spacing="2">[sɛθ ˈæk.səl]</text>
-  <text x="340" y="130" text-anchor="middle"
-    font-family="IM Fell English,serif" font-style="italic" font-size="13" fill="#8b949e" opacity="0.8">he/him · Junior C &amp; Python Dev</text>
 </svg>
