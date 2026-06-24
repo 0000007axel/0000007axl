@@ -1,11 +1,8 @@
 <p align="center">
-  <table align="center">
-    <tr>
-      <td width="680" height="251" style="background: url('https://i.ibb.co/VchbwZ1b/banner-19.gif') no-repeat; background-size: 680px 251px;" align="center">
-        <img src="title.svg?v=5" width="680" alt="Axel">
-      </td>
-    </tr>
-  </table>
+  <img src="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="680" alt="">
+</p>
+<p align="center">
+  <img src="title.svg?v=5" width="680" alt="Axel">
 </p>
 
 <div align="center">

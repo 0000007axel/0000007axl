@@ -110,11 +110,10 @@ def build_title_svg():
     inner = inner.split(">", 1)[1]
     inner = inner.rsplit("</svg>", 1)[0]
     sc = W / 204.37494 / 2
-    g4_h = 50.076725 * sc
-    title_ofs = 125
-    ipa_y = 225
-    sub_y = 240
-    H = 251
+    title_ofs = 0
+    ipa_y = 110
+    sub_y = 130
+    H = 145
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <defs>
     <style>
