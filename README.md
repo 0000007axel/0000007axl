@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=666666&height=200&section=header&text=&fontSize=0" width="680" />
-</p>
-
-<p align="center">
   <img src="title.svg?v=4" width="680" alt="Axel">
 </p>
 
@@ -27,6 +23,7 @@ I use NeoVim btw.
 <div align="center">
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=25&pause=1000&color=F7F7F780&center=true&vCenter=true&width=450&height=100&lines=Algorithms+enthusiast.;Linux+native.;Living+in+the+terminal." alt="Typing SVG" /></a>
 </div>
+
 ---
 
 ### github
