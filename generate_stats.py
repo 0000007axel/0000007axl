@@ -154,7 +154,6 @@ def build_title_svg():
                 if cmd in 'Zz': continue
                 continue
             if cmd is None: break
-            n = float(t)
             if cmd in ('m','M'):
                 y = float(tokens[i+1]) if cmd == 'M' else y + float(tokens[i+1])
                 ys.append(y); i += 2
@@ -163,28 +162,29 @@ def build_title_svg():
                 y = float(tokens[i+1]) if cmd == 'L' else y + float(tokens[i+1])
                 ys.append(y); i += 2
             elif cmd in ('c','C'):
-                for k in range(3):
-                    dy = float(tokens[i+1])
-                    y = dy if cmd == 'C' else y + dy
-                    ys.append(y); i += 2
-                    if k < 2: n = float(tokens[i])
+                # skip control points, only track endpoint (3rd pair)
+                dy = float(tokens[i+5])
+                y = dy if cmd == 'C' else y + dy
+                ys.append(y); i += 6
             elif cmd in ('v','V'):
-                y = n if cmd == 'V' else y + n; ys.append(y); i += 1
+                y = float(tokens[i]) if cmd == 'V' else y + float(tokens[i])
+                ys.append(y); i += 1
             elif cmd in ('h','H'):
                 i += 1
             elif cmd in ('s','S'):
-                for k in range(2):
-                    dy = float(tokens[i+1])
-                    y = dy if cmd == 'S' else y + dy; ys.append(y); i += 2
-                    if k == 0: n = float(tokens[i])
+                # skip control point, only track endpoint (2nd pair)
+                dy = float(tokens[i+3])
+                y = dy if cmd == 'S' else y + dy
+                ys.append(y); i += 4
             elif cmd in ('q','Q'):
-                for k in range(2):
-                    dy = float(tokens[i+1])
-                    y = dy if cmd == 'Q' else y + dy; ys.append(y); i += 2
-                    if k == 0: n = float(tokens[i])
+                # skip control point, only track endpoint (2nd pair)
+                dy = float(tokens[i+3])
+                y = dy if cmd == 'Q' else y + dy
+                ys.append(y); i += 4
             elif cmd in ('t','T'):
                 dy = float(tokens[i+1])
-                y = dy if cmd == 'T' else y + dy; ys.append(y); i += 2
+                y = dy if cmd == 'T' else y + dy
+                ys.append(y); i += 2
             elif cmd in ('a','A'):
                 y = float(tokens[i+5]) if cmd == 'A' else y + float(tokens[i+5])
                 ys.append(y); i += 7
