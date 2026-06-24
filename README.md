@@ -21,7 +21,7 @@ Building things in C from scratch. Occasionally writing Python when I want to fe
 I use NeoVim btw.
 
 <div align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=25&pause=1000&color=F7F7F780&center=true&vCenter=true&width=450&height=100&lines=Algorithms+enthusiast.;Linux+native.;Living+in+the+terminal." alt="Typing SVG" /></a>
+  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&duration=4000&color=FFFFFF&center=true&vCenter=true&random=true&width=450&height=40&lines=Algorithms+optimizer.;Living+in+the+terminal;Linux+native.;Neovim+exclusive.;Dotfiles+craftsman.;Kanagawa+wave." alt="Typing SVG" /></a>
 </div>
 
 ---
