@@ -106,11 +106,9 @@ def build_title_svg():
     g4_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "g4.svg")
     with open(g4_path) as f:
         g4 = f.read()
-    # Extract <defs> and the layer <g> from g4.svg, strip xml decl / outer <svg>
     inner = g4.split("<svg", 1)[1]
     inner = inner.split(">", 1)[1]
     inner = inner.rsplit("</svg>", 1)[0]
-    # Scale g4 content to fit W, lighten fill to #e6edf3
     sc = W / 204.37494
     g4_h = 50.076725 * sc
     gap = 16
