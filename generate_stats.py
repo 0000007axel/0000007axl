@@ -117,7 +117,8 @@ def glyph_paths(font_path, text="seth axel", font_size=62.0):
     return glyphs
 
 def build_title_svg():
-    import os
+    import os, re
+    from xml.etree import ElementTree as ET
     W=680
     g4_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "g4.svg")
     with open(g4_path) as f:
@@ -129,10 +130,85 @@ def build_title_svg():
     g4_xoff = -3.3807975 + -2.9924433
     g4_center = (204.37494 / 2 + g4_xoff) * sc
     g4_adjust = -round(g4_center) - 7
-    H = 90
+
+    # Compute g4 content bounding box for y
+    def tokenize(d):
+        tokens = []
+        i = 0
+        while i < len(d):
+            if d[i] in 'MmLlCcVvHhSsQqTtAaZz':
+                tokens.append(d[i]); i += 1
+            elif d[i] in '-0123456789.':
+                j = i
+                while j < len(d) and d[j] in '-0123456789.eE': j += 1
+                tokens.append(d[i:j]); i = j
+            else: i += 1
+        return tokens
+    def parse_y(d):
+        tokens = tokenize(d)
+        y = 0.0; cmd = None; i = 0; ys = []
+        while i < len(tokens):
+            t = tokens[i]
+            if t in 'MmLlCcVvHhSsQqTtAaZz':
+                cmd = t; i += 1
+                if cmd in 'Zz': continue
+                continue
+            if cmd is None: break
+            n = float(t)
+            if cmd in ('m','M'):
+                y = float(tokens[i+1]) if cmd == 'M' else y + float(tokens[i+1])
+                ys.append(y); i += 2
+                cmd = 'l' if cmd == 'm' else 'L'
+            elif cmd in ('l','L'):
+                y = float(tokens[i+1]) if cmd == 'L' else y + float(tokens[i+1])
+                ys.append(y); i += 2
+            elif cmd in ('c','C'):
+                for k in range(3):
+                    dy = float(tokens[i+1])
+                    y = dy if cmd == 'C' else y + dy
+                    ys.append(y); i += 2
+                    if k < 2: n = float(tokens[i])
+            elif cmd in ('v','V'):
+                y = n if cmd == 'V' else y + n; ys.append(y); i += 1
+            elif cmd in ('h','H'):
+                i += 1
+            elif cmd in ('s','S'):
+                for k in range(2):
+                    dy = float(tokens[i+1])
+                    y = dy if cmd == 'S' else y + dy; ys.append(y); i += 2
+                    if k == 0: n = float(tokens[i])
+            elif cmd in ('q','Q'):
+                for k in range(2):
+                    dy = float(tokens[i+1])
+                    y = dy if cmd == 'Q' else y + dy; ys.append(y); i += 2
+                    if k == 0: n = float(tokens[i])
+            elif cmd in ('t','T'):
+                dy = float(tokens[i+1])
+                y = dy if cmd == 'T' else y + dy; ys.append(y); i += 2
+            elif cmd in ('a','A'):
+                y = float(tokens[i+5]) if cmd == 'A' else y + float(tokens[i+5])
+                ys.append(y); i += 7
+            else: break
+        return ys
+    tree = ET.fromstring(g4)
+    ns = {"svg": "http://www.w3.org/2000/svg"}
+    paths = tree.findall(".//{http://www.w3.org/2000/svg}path") or tree.findall(".//path")
+    total_yoff = -217.75742 + (-1.4962217)
+    all_y = []
+    for path in paths:
+        d = path.get('d', '')
+        if not d or len(d) < 20: continue
+        all_y.extend([y + total_yoff for y in parse_y(d)])
+    content_min_y = min(all_y)
+    content_max_y = max(all_y)
+    content_h_in_title = (content_max_y - content_min_y) * sc
+    pad = 10
+    H = int(content_h_in_title) + pad * 2
+    g4_cy = (content_min_y + content_max_y) / 2
+    g4_yoff = -(g4_cy * sc)
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <g transform="translate({W//2}, {H//2})">
-    <g transform="translate({g4_adjust}, -25) scale({sc:.4f})">
+    <g transform="translate({g4_adjust}, {g4_yoff:.1f}) scale({sc:.4f})">
 {inner}
     </g>
   </g>
