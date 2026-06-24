@@ -23,7 +23,8 @@
 
   Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.
-I use NeoVim btw.
+Currently obsessed with understanding how things work under the hood. Most of my time is spent working with algorithms, networking, and software architecture.
+  I use Neovim btw.
 
 &nbsp;
 &nbsp;
