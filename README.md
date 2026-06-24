@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="680" alt="">
-</p>
-<p align="center" style="margin-top: -251px;">
-  <img src="title.svg?v=5" width="680" alt="Axel">
+  <img src="https://i.ibb.co/VchbwZ1b/banner-19.gif" width="680" alt="" style="display: block; margin-bottom: -251px;">
+  <img src="title.svg?v=5" width="680" alt="Axel" style="display: block; margin: 0 auto;">
 </p>
 
 <div align="center">
