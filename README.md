@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="title.svg" width="800" alt="Axel">
+  <img src="title.svg" width="700" alt="Axel">
   <br>
   <br>
   <img src="subtitle.svg" width="500" alt="subtitle">
@@ -15,9 +15,8 @@
   <img src="https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=white" />
 </div>
 
----
 
-### about
+## a b o u t
 
 Student at **École 42** — learning through projects, ego, and pain.
 Building things in C from scratch. Occasionally writing Python when I want to feel productive.
@@ -27,9 +26,8 @@ I use NeoVim btw.
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Jacquard+12&size=24&duration=4000&color=ACACAC&center=true&vCenter=true&random=true&width=450&height=40&lines=Algorithms+optimizer.;Living+in+the+terminal;Linux+native.;Neovim+exclusive.;Dotfiles+craftsman.;Kanagawa+wave." alt="Typing SVG" /></a>
 </div>
 
----
 
-### github
+## g i t h u b
 
 <p align="center">
   <img src="github.svg" width="680" alt="GitHub Stats">
@@ -39,9 +37,8 @@ I use NeoVim btw.
   <img src="contrib.svg" width="680" alt="Contributions">
 </p>
 
----
 
-### leetcode
+## l e e t c o d e
 
 <p align="center">
   <img src="leetcode.svg" width="680" alt="LeetCode Stats">
