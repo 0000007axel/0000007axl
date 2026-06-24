@@ -112,7 +112,7 @@ def build_title_svg():
     sc = W / 204.37494 / 2
     g4_xoff = -3.3807975 + -2.9924433
     g4_center = (204.37494 / 2 + g4_xoff) * sc
-    g4_adjust = -round(g4_center) - 3
+    g4_adjust = -round(g4_center) - 1
     ipa_y = 111
     sub_y = 131
     H = 145
