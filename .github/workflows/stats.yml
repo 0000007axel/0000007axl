@@ -22,7 +22,7 @@ jobs:
       - name: Generate SVGs
         env:
           GITHUB_TOKEN: ${{ secrets.STATS_TOKEN }}
-          GITHUB_USER: 0000007axl
+          GITHUB_USER: 0000007axel
           LEETCODE_USER: AxelSeth
         run: python generate_stats.py
 
